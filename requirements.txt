@@ -1,3 +1,4 @@
+openpyxl==3.0.10
 alembic==1.7.3
 ansible==2.9.6
 anyio==3.3.1
