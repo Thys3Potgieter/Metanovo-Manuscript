@@ -97,11 +97,11 @@ def process_txt(path, name, outfolder, col_order = None, prot_map = None, dropna
         os.mkdir(analysis_folder)
     print(path)
     result = {}
-    peptides = pd.read_csv('{}/peptides.txt'.format(path), sep='\t')
-    proteins = pd.read_csv('{}/proteinGroups.txt'.format(path), sep='\t')
+    peptides = pd.read_csv('{}/peptides.txt'.format(path), sep='\t', low_memory=False)
+    proteins = pd.read_csv('{}/proteinGroups.txt'.format(path), sep='\t', low_memory=False)
     
     try:
-        summary = pd.read_csv('{}/summary.txt'.format(path), sep='\t')
+        summary = pd.read_csv('{}/summary.txt'.format(path), sep='\t', low_memory=False)
     except:
         pass
     target_peptides = peptides[peptides['Reverse']!= '+']
@@ -123,7 +123,7 @@ def process_txt(path, name, outfolder, col_order = None, prot_map = None, dropna
     peptide_sequences = set(target_peptides['Sequence'].tolist())
     
     if os.path.exists('{}/evidence.txt'.format(path)):
-        evidences = pd.read_csv('{}/evidence.txt'.format(path), sep='\t')
+        evidences = pd.read_csv('{}/evidence.txt'.format(path), sep='\t', low_memory=False)
         counts = spectral_counts(evidences, target_peptides, col_order)
         result['SpectralCounts'] = counts
     
