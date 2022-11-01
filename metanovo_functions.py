@@ -596,9 +596,10 @@ def plot_taxa( results, col , mapping, order, filt=0.5, taxon_filter={}, truth_l
             _count[x] = 0
         #if _count[x] == pos:
         height = p.get_height()
-        pct = height / _total[x]  * 100.0
+        
         if _total[x] == 0:
             continue
+        pct = height / _total[x]  * 100.0
         #if pct < 1:
         #    continue
         pct = np.round(pct, 2)
