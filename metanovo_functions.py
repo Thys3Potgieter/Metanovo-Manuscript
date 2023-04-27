@@ -40,6 +40,13 @@ from natsort import realsorted
 import operator
 from itertools import cycle, islice
 
+import matplotlib
+font = {'size'   : 16}
+
+matplotlib.rc('font', **font)
+
+
+
 def compare_msms(mm1, mm2, names, outpath):
     if not os.path.exists(outpath):
         os.mkdir(outpath)
@@ -576,7 +583,7 @@ def plot_taxa( results, col , mapping, order, filt=0.5, taxon_filter={}, truth_l
         pos = ind.index('missasignment')
         my_colors[pos] = 'r'
     t_df = count_df.transpose()    
-    matplotlib.rcParams.update({'font.size': 11})
+    #matplotlib.rcParams.update({'font.size': 11})
     ax1 = t_df.plot(kind='bar', rot=1, stacked=True, color=my_colors,figsize=(10,6)) 
     _ = {}
     _count = {}
@@ -608,12 +615,15 @@ def plot_taxa( results, col , mapping, order, filt=0.5, taxon_filter={}, truth_l
         _[x] += p.get_height()
         _count[x] += 1
     if truth_exclude == True:
-        heading = 'False Taxa {}'.format(agglevel)
+        heading = 'False taxa {}'.format(agglevel)
     else:
         heading = agglevel
+    heading = heading[:1].upper() + heading[1:].lower()
     ax1.set_title("{} by UniPept pept2lca {}".format(heading, col))
     ax1.legend(bbox_to_anchor=(1.05, 0), loc='lower left', borderaxespad=0.)
     plt.xticks(rotation=45)
+    plt.xlabel('Database')
+    plt.ylabel('{} count'.format(level[:1].upper() + level[1:]))
     fig = ax1.get_figure()
     if not fname is None:
         fig.savefig(fname, bbox_inches='tight', dpi=600)
